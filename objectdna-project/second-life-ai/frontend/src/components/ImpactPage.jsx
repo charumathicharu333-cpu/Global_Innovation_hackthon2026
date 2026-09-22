@@ -1,0 +1,17 @@
+import { Icon } from './Icons'
+
+export function ImpactPage({ impact, onReset, navigate }) {
+  const totalPaths = impact.reused + impact.repairable + impact.recovered + impact.donated
+  const cards = [
+    { label: 'Objects analyzed', value: impact.objectsAnalyzed, icon: 'scan', tone: 'teal' },
+    { label: 'Potentially kept in use', value: impact.reused, icon: 'leaf', tone: 'lime' },
+    { label: 'Repair paths found', value: impact.repairable, icon: 'wrench', tone: 'violet' },
+    { label: 'Materials to recover', value: impact.recovered, icon: 'recycle', tone: 'amber' },
+  ]
+  return <div className="impact-page page-section"><div className="container impact-container"><div className="impact-hero"><div><div className="section-kicker">YOUR CIRCULAR IMPACT</div><h1>Make waste<br /><em>less inevitable.</em></h1><p>Every scan is a small pause before disposal. This dashboard turns those pauses into a private, AI-generated estimate of what stayed in motion.</p></div><div className="impact-emblem"><Icon name="leaf" size={35} /><span>{impact.objectsAnalyzed ? `${impact.objectsAnalyzed} objects` : 'start here'}</span></div></div><div className="impact-summary"><div><span className="micro-label">ESTIMATED WASTE AVOIDED</span><strong>{impact.wasteAvoided.toFixed(1)} <small>kg</small></strong><span className="summary-caption">from your analyzed objects</span></div><div className="summary-progress"><span><b>{totalPaths}</b> paths discovered beyond disposal</span><div className="progress-bar"><i style={{ width: `${Math.min(100, totalPaths ? totalPaths * 12 : 4)}%` }} /></div></div><button className="button button-outline" onClick={onReset} disabled={!impact.objectsAnalyzed}>Reset my impact</button></div><div className="metric-card-grid">{cards.map((card) => <div className={`journey-card tone-${card.tone}`} key={card.label}><div className="journey-card-top"><span className="journey-icon"><Icon name={card.icon} size={20} /></span><Icon name="arrow-up" size={15} /></div><strong>{card.value}</strong><span>{card.label}</span></div>)}</div><section className="journey-path"><div className="section-heading-row"><div><div className="section-kicker">AI-GENERATED ESTIMATES</div><h2>A different default<br /><em>takes shape.</em></h2></div><p className="section-side-copy">The numbers stay on this device. They are directional estimates, not verified measurements.</p></div><div className="choice-bars"><ChoiceBar label="Kept in use" value={impact.reused} total={impact.objectsAnalyzed} icon="refresh" /><ChoiceBar label="Repairable" value={impact.repairable} total={impact.objectsAnalyzed} icon="wrench" /><ChoiceBar label="Donated" value={impact.donated} total={impact.objectsAnalyzed} icon="gift" /><ChoiceBar label="Recovered" value={impact.recovered} total={impact.objectsAnalyzed} icon="recycle" /></div></section><div className="impact-bottom"><div><Icon name="clock" size={17} /> {impact.usefulLifeHours} estimated hours of useful life extended</div><button className="button button-dark" onClick={() => navigate('/analyze')}>Analyze another object <Icon name="arrow" size={16} /></button></div></div></div>
+}
+
+function ChoiceBar({ label, value, total, icon }) {
+  const width = total ? Math.max(value ? 7 : 0, (value / total) * 100) : 0
+  return <div className="choice-row"><div className="choice-label"><Icon name={icon} size={16} /><span>{label}</span></div><div className="choice-track"><i style={{ width: `${width}%` }} /></div><strong>{value}</strong></div>
+}

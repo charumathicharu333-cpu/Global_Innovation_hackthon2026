@@ -1,0 +1,58 @@
+import {
+  ArrowRight, ArrowUpRight, BarChart3, Backpack, Box, Camera, Check, ChevronDown, ChevronRight,
+  CircleHelp, CloudUpload, Clock3, Cpu, Eye, ExternalLink, Gift, Headphones, History, Image as ImageIcon,
+  Layers3, Leaf, Menu, Package, Quote, Recycle, RefreshCw, Route, ScanLine, Search, ShieldCheck,
+  Shirt, Smartphone, Sparkles, Table2, Tag, Trash2, TriangleAlert, Upload, Users, WandSparkles,
+  Wrench, X, Zap, Armchair,
+} from 'lucide-react'
+
+const icons = {
+  arrow: ArrowRight,
+  'arrow-up': ArrowUpRight,
+  chart: BarChart3,
+  box: Box,
+  backpack: Backpack,
+  chair: Armchair,
+  camera: Camera,
+  check: Check,
+  chevron: ChevronDown,
+  'chevron-right': ChevronRight,
+  help: CircleHelp,
+  upload: CloudUpload,
+  cpu: Cpu,
+  clock: Clock3,
+  eye: Eye,
+  external: ExternalLink,
+  gift: Gift,
+  headphones: Headphones,
+  history: History,
+  image: ImageIcon,
+  leaf: Leaf,
+  layers: Layers3,
+  menu: Menu,
+  package: Package,
+  quote: Quote,
+  recycle: Recycle,
+  refresh: RefreshCw,
+  route: Route,
+  scan: ScanLine,
+  search: Search,
+  shield: ShieldCheck,
+  shirt: Shirt,
+  smartphone: Smartphone,
+  sparkles: Sparkles,
+  table: Table2,
+  tag: Tag,
+  trash: Trash2,
+  warning: TriangleAlert,
+  users: Users,
+  wand: WandSparkles,
+  wrench: Wrench,
+  x: X,
+  zap: Zap,
+}
+
+export function Icon({ name, size = 20, strokeWidth = 1.8, ...props }) {
+  const Component = icons[name] || Sparkles
+  return <Component size={size} strokeWidth={strokeWidth} aria-hidden="true" {...props} />
+}

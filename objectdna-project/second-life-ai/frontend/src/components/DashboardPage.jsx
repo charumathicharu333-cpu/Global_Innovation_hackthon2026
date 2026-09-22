@@ -1,0 +1,18 @@
+import { Icon } from './Icons'
+
+export function DashboardPage({ impact, history, navigate }) {
+  const recent = history.slice(0, 3)
+  const reuseRate = impact.objectsAnalyzed ? Math.round((impact.reused / impact.objectsAnalyzed) * 100) : 0
+  const stats = [
+    ['Objects analyzed', impact.objectsAnalyzed, 'scan', 'teal'],
+    ['Objects saved', impact.reused + impact.repairable, 'leaf', 'lime'],
+    ['Reuse opportunities', impact.reused, 'refresh', 'violet'],
+    ['Waste avoided', `${impact.wasteAvoided.toFixed(1)} kg`, 'trash', 'amber'],
+  ]
+  return <div className="dashboard-page page-section"><div className="container dashboard-container">
+    <div className="dashboard-hero"><div><div className="section-kicker">YOUR OBJECTDNA WORKSPACE</div><h1>Make the next<br /><em>choice count.</em></h1><p>Keep a lightweight, private ledger of the objects you paused to understand.</p></div><button className="button button-dark button-large" onClick={() => navigate('/analyze')}>Analyze an object <Icon name="arrow" size={17} /></button></div>
+    <div className="dashboard-stats">{stats.map(([label, value, icon, tone]) => <div className={`dashboard-stat tone-${tone}`} key={label}><div className="dashboard-stat-top"><span className="dashboard-stat-icon"><Icon name={icon} size={19} /></span><Icon name="arrow-up" size={14} /></div><strong>{value}</strong><span>{label}</span></div>)}</div>
+    <div className="dashboard-grid"><section className="dashboard-panel"><div className="panel-heading"><div><div className="section-kicker">RECENT ANALYSES</div><h2>What you’ve<br /><em>explored.</em></h2></div><button className="text-button" onClick={() => navigate('/history')}>View all <Icon name="arrow" size={15} /></button></div>{recent.length ? <div className="recent-list">{recent.map((record) => <button className="recent-row" key={record.id} onClick={() => navigate('/history')}><span className="recent-icon"><Icon name="box" size={18} /></span><span><strong>{record.object_name}</strong><small>{new Date(record.created_at).toLocaleDateString()} · {record.condition}</small></span><span className="recent-score">{record.life_path_score}<small>score</small></span><Icon name="chevron-right" size={16} /></button>)}</div> : <div className="dashboard-empty"><Icon name="scan" size={25} /><strong>Your first scan starts the ledger.</strong><span>Try the broken wooden table demo to see the full flow.</span><button className="button button-outline" onClick={() => navigate('/analyze')}>Try demo mode</button></div>}</section><section className="dashboard-panel impact-panel"><div className="section-kicker">CIRCULAR SIGNAL</div><h2>Your choices<br /><em>stay in motion.</em></h2><div className="signal-number"><strong>{reuseRate}%</strong><span>of analyzed objects have a path beyond disposal.</span></div><div className="signal-track"><i style={{ width: `${reuseRate}%` }} /></div><div className="dashboard-impact-row"><span><Icon name="clock" size={17} /> Useful life estimated</span><b>{impact.usefulLifeHours} hrs</b></div><div className="dashboard-impact-row"><span><Icon name="recycle" size={17} /> Materials recoverable</span><b>{impact.recovered}</b></div><small className="dashboard-disclaimer">AI-generated estimates based on your local browser history, not verified measurements.</small></section></div>
+    <div className="dashboard-footer"><div><Icon name="shield" size={18} /><span>Your history stays on this device for this prototype.</span></div><button className="button button-outline" onClick={() => navigate('/impact')}>Open impact dashboard <Icon name="arrow" size={16} /></button></div>
+  </div></div>
+}
