@@ -47,7 +47,6 @@ Then open:
 Opening `index.html` directly also renders the page, while a local HTTP server enables the service worker.
 
 ## Links
-- GitHub: https://github.com/Aswini-ox/ObjectDNA-AI-Circular-Reuse-Platform
 - Live prototype: https://objectdna-ai-circular-reuse-platform.onrender.com
 
 ## Package contents
